@@ -1,0 +1,26 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: FiatTokenV1
+    network: mainnet
+    source:
+      address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+      abi: FiatTokenV1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - Upgraded
+      abis:
+        - name: FiatTokenV1
+          file: ./abis/FiatTokenV1.json
+      eventHandlers:
+        - event: AdminChanged(address,address)
+          handler: handleAdminChanged
+        - event: Upgraded(address)
+          handler: handleUpgraded
+      file: ./src/fiat-token-v-1.ts
